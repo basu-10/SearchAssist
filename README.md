@@ -6,7 +6,7 @@ Hence made this module to use as a local package(for now) in your projects that 
 This code provides a basic implementation of a Google Search API wrapper that allows you to perform search queries and retrieve and format search results. It utilizes the googleapiclient library and the dotenv library for configuration.
 
 ### Setup:
-python -m venv .venv
+[] python -m venv .venv
 source .venv/bin/activate
 pip install -U google-api-python-client
 pip install -U python-dotenv
