@@ -1,16 +1,22 @@
 '''
-user must provide their key while running as module! import , then initialize with keys
-OR, can also setup key in a .env.private file and run this file as script: python -m file123.py
+can run as:
+python SearchAssist.py
+OR,
+python SearchAssist.py --api-key YOUR_API_KEY --cse-key YOUR_CSE_KEY --query SEARCH_QUERY
+
+provide your own YOUR_API_KEY, YOUR_CSE_KEY, SEARCH_QUERY
 '''
 from googleapiclient.discovery import build
 import pprint
-
-from dotenv import dotenv_values
-config = dotenv_values(".env.secret") 
-
+import argparse
 import logging
-logging.basicConfig(filename='error.log', level=logging.ERROR) # Set up logging configuration
-                    
+from dotenv import dotenv_values
+
+# Set up logging configuration
+logging.basicConfig(filename='error.log', level=logging.ERROR)
+
+config = dotenv_values(".env.secret")
+
 class GoogleSearchAPI:
     def __init__(self, api_key, cse_key):
         self.api_key = api_key
@@ -24,7 +30,7 @@ class GoogleSearchAPI:
                 f.write(str(result_raw))
             return result_raw
         except Exception as e:
-            logging.errors(f'Error {e} occured')
+            logging.error(f'Error {e} occurred')
 
     def trim_results(self, result_raw):
         result_trimmed = []
@@ -42,12 +48,21 @@ class GoogleSearchAPI:
         for i in result_trimmed:
             pprint.pprint(i)
 
-if __name__=="__main__":
-    
-    query = input("Query? ")
 
-    api_key = config['api_key']
-    cse_key = config['cse_key']
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Google Search API Client")
+
+    # command line arguments
+    parser.add_argument("--api-key", help="Your API Key")
+    parser.add_argument("--cse-key", help="Your CSE Key")
+    parser.add_argument("--query", help="Search query")
+
+    args = parser.parse_args()
+
+    api_key = args.api_key or config['api_key']
+    cse_key = args.cse_key or config['cse_key']
+    query = args.query or input("Enter your search query: ")
+
     search_api = GoogleSearchAPI(api_key, cse_key)
     result_raw = search_api.search(query)
     result_trimmed = search_api.trim_results(result_raw)
