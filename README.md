@@ -8,7 +8,6 @@ While "googler" is a command-line utility that allows direct Google searches fro
 
 ### Setup:
 * Download the files
-* IMPORTANT: Rename the *env.secret* file to *.env.secret* (Without this step python-dotenv can't find the file)
 * $ python -m venv .venv
 * $ source .venv/bin/activate
 * $ pip install -r requirements.txt
