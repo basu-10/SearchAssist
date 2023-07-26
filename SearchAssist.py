@@ -36,9 +36,7 @@ class GoogleSearchAPI:
 
     def search(self, query):
         try:
-            result_raw = self.resource.list(q=query, cx=self.cse_key).execute()
-            with open("result_raw.txt", "w") as f:
-                f.write(str(result_raw))
+            result_raw = self.resource.list(q=query, cx=self.cse_key).execute()            
             return result_raw
         except Exception as e:
             logging.error(f"Error {e} occurred")
@@ -50,9 +48,7 @@ class GoogleSearchAPI:
             snippet = i["snippet"]
             url = i["link"]
             d = {"title": title, "snippet": snippet, "url": url}
-            result_trimmed.append(d)
-        with open("result_trimmed.txt", "w") as f:
-            f.write(str(result_trimmed))
+            result_trimmed.append(d)        
         return result_trimmed
 
     def pprint_results(self, result_trimmed):
