@@ -1,10 +1,17 @@
+"""
+This Python package provides a command-line tool to leverage the Google Custom Search API for easy web searches.
+"""
+
 '''
-can run as:
+Can run as:
 python SearchAssist.py --q "SEARCH QUERY"
 OR,
 python SearchAssist.py --api-key YOUR_API_KEY --cse-key YOUR_CSE_KEY --q "SEARCH QUERY"
 
-provide your own YOUR_API_KEY, YOUR_CSE_KEY, SEARCH_QUERY
+provide your own 
+YOUR_API_KEY from https://developers.google.com/custom-search/v1/overview
+YOUR_CSE_KEY from https://programmablesearchengine.google.com/controlpanel/all
+SEARCH_QUERY 
 '''
 
 from googleapiclient.discovery import build
