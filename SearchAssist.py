@@ -15,8 +15,9 @@ SEARCH_QUERY
 '''
 
 from googleapiclient.discovery import build
-import pprint
 import logging
+from termcolor import colored, cprint
+
 
 import argparse
 import os
@@ -53,8 +54,10 @@ class GoogleSearchAPI:
 
     def pprint_results(self, result_trimmed):
         for i in result_trimmed:
-            pprint.pprint(i)
-
+            print( colored(i["title"],"red",attrs=["bold"]))
+            print(colored( i["url"],"blue",attrs=["underline"]))
+            print(i["snippet"])
+            print()
 
 class Process:
     def save_to_env_file(api_key, cse_key, file_path):
@@ -100,10 +103,11 @@ if __name__ == "__main__":
             cse_key = input("Enter your CSE key: ")
             Process.save_to_env_file(api_key, cse_key, env_file_path)
     
-    print("Searching for:", args.q)
+    print("Searching for: ", args.q)
     # search logic
     search_api = GoogleSearchAPI(api_key, cse_key)
     result_raw = search_api.search(args.q)
+    # print(f'{result_raw=}')
     result_trimmed = search_api.trim_results(result_raw)
     search_api.pprint_results(result_trimmed)
 
